@@ -6,7 +6,13 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
-io.on('connection', function (socket) {
+io.sockets.on('connection', function (socket) {
+  // New connection
+  socket.on('connection name', function (user) {
+    io.emit('new user', user.name + ' has joined.');
+  });
+
+  // Chat message
   socket.on('chat message', function (message) {
     io.emit('chat message', message);
   });
