@@ -22,11 +22,19 @@
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
       var socket = io();
+      var newUser = { 'name': 'Ghost user' }
+
+      // new user comes in
+      socket.emit('connection name', newUser);
 
       $('form').submit(function () {
         socket.emit('chat message', $('#m').val());
         $('#m').val('');
         return false;
+      });
+
+      socket.on('new user', function (message) {
+        $('#messages').append($('<li>').text(message);
       });
 
       socket.on('chat message', function (message) {
