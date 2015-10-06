@@ -12,7 +12,24 @@ var options = {
 };
 
 describe('Chat server', function () {
+  it('broadcast chat message to all clients', function (done) {
+    var client1 = io.connect(socketURL, options);
+    var client2 = io.connect(socketURL, options);
 
+    client1.on('connect', function (data) {
+      client1.emit('chat message', 'Hey everyone!');
+      client1.disconnect();
+    });
+
+    client2.on('chat message', function (message) {
+      message.should.equal('Hey everyone!');
+      client2.disconnect();
+    });
+
+    done();
+  });
+
+  // A single user
   it('Should broadcast new user once they connect', function (done) {
     var client = io.connect(socketURL, options);
 
