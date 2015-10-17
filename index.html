@@ -21,11 +21,17 @@
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-      var socket = io();
-      var newUser = { 'name': 'Ghost user' }
+      function newUser(socket) {
+        var userName = prompt("Digita seu nick aí jovem:", "");
+        var newUser = { 'name': userName };
 
-      // new user comes in
-      socket.emit('user connect', newUser);
+        socket.emit('user connect', newUser);
+
+        return newUser;
+      }
+
+      var socket = io();
+      var newUser = newUser(socket);
 
       $('form').submit(function () {
         socket.emit('chat message', $('#m').val());
@@ -33,20 +39,12 @@
         return false;
       });
 
-      window.onbeforeunload = function() {
-        socket.emit('user disconnect', newUser);
-      }
-
-      socket.on('user connect', function (message) {
-        $('#messages').append($('<li>').text(message));
-      });
-
-      socket.on('user disconnect', function (message) {
-        $('#messages').append($('<li>').text(message));
+      socket.on('new user', function (message) {
+        $('#messages').append($('<li>').text(message);
       });
 
       socket.on('chat message', function (message) {
-        $('#messages').append($('<li>').text(newUser.name + ': ' + message));
+        $('#messages').append($('<li>').text(message));
       });
     </script>
   </body>
