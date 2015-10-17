@@ -16,10 +16,8 @@ describe('Chat server', function () {
     var client1 = io.connect(socketURL, options);
     var client2 = io.connect(socketURL, options);
 
-    client1.on('connect', function (data) {
-      client1.emit('chat message', 'Hey everyone!');
-      client1.disconnect();
-    });
+    client1.emit('chat message', 'Hey everyone!');
+    client1.disconnect();
 
     client2.on('chat message', function (message) {
       message.should.equal('Hey everyone!');
@@ -30,15 +28,26 @@ describe('Chat server', function () {
   });
 
   // A single user
-  it('Should broadcast new user once they connect', function (done) {
+  it('Should broadcast "user connect" message once they connect', function (done) {
     var client = io.connect(socketURL, options);
 
-    client.on('connect', function (data) {
-      client.emit('connection name', chatUser1);
-    });
+    client.emit('user connect', chatUser1);
 
-    client.on('new user', function (usersName) {
+    client.on('user connect', function (usersName) {
       usersName.should.equal(chatUser1.name + " has joined.");
+
+      client.disconnect();
+      done();
+    });
+  });
+
+  it('Should broadcast "user disconnect" once they disconnect', function (done) {
+    var client = io.connect(socketURL, options);
+
+    client.emit('user disconnect', chatUser1);
+
+    client.on('user disconnect', function (usersName) {
+      usersName.should.equal(chatUser1.name + " has disconnected.");
 
       client.disconnect();
       done();
