@@ -25,7 +25,7 @@
       var newUser = { 'name': 'Ghost user' }
 
       // new user comes in
-      socket.emit('connection name', newUser);
+      socket.emit('user connect', newUser);
 
       $('form').submit(function () {
         socket.emit('chat message', $('#m').val());
@@ -33,12 +33,20 @@
         return false;
       });
 
-      socket.on('new user', function (message) {
-        $('#messages').append($('<li>').text(message);
+      window.onbeforeunload = function() {
+        socket.emit('user disconnect', newUser);
+      }
+
+      socket.on('user connect', function (message) {
+        $('#messages').append($('<li>').text(message));
+      });
+
+      socket.on('user disconnect', function (message) {
+        $('#messages').append($('<li>').text(message));
       });
 
       socket.on('chat message', function (message) {
-        $('#messages').append($('<li>').text(message));
+        $('#messages').append($('<li>').text(newUser.name + ': ' + message));
       });
     </script>
   </body>
