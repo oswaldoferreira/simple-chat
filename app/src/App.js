@@ -38,6 +38,7 @@ class App extends Component {
   subscribeSockets() {
     socket.on('chat-message', (message) => {
       this.setState({ messages: [...this.state.messages, message] });
+      window.scrollTo(0, document.body.scrollHeight);
     });
   }
 
@@ -51,7 +52,6 @@ class App extends Component {
   }
 
   render() {
-    console.log('rendering');
     return (
       <div className="App">
         <div className="container">

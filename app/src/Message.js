@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-const Message = ({isAuthor, authorName, text, avatarImage}) => {
+const Message = ({authorName, text, avatarImage}) => {
   return (
     <div className="message-box left-img">
       <div className="picture">
