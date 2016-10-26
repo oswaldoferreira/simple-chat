@@ -6,17 +6,17 @@ let io = require('socket.io-client');
 let socket = io.connect(process.env.SOCKET_URI || 'http://0.0.0.0:8080');
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { messages: [] };
+  }
+
   componentWillMount() {
     this.subscribeSockets();
   }
 
   componentDidMount() {
     this.messageInput.focus();
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = { messages: [] };
   }
 
   onMessageSent() {
