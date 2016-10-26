@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import Message from './Message';
 import './App.css';
 let io = require('socket.io-client');
-let socket = io.connect('http://192.168.25.228:8080');
+let socket = io.connect(process.env.SOCKET_URI || 'http://0.0.0.0:8080');
 
 class App extends Component {
   componentWillMount() {
