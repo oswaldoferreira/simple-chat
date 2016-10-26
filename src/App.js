@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import Message from './Message';
-var io = require('socket.io-client');
-var socket = io.connect('http://localhost:8080');
 import './App.css';
+let io = require('socket.io-client');
+let socket = io.connect('http://192.168.25.228:8080');
 
 class App extends Component {
   componentWillMount() {
     this.subscribeSockets();
+  }
+
+  componentDidMount() {
+    this.messageInput.focus();
   }
 
   constructor(props) {
@@ -16,8 +20,17 @@ class App extends Component {
   }
 
   onMessageSent() {
-    let message = { authorName: this.props.authorName, text: this.messageInput.value };
-    socket.emit('chat-message', message);
+    if (this.messageInput.value !== '') {
+      let message = { authorName: this.props.authorName, text: this.messageInput.value };
+      socket.emit('chat-message', message);
+      this.messageInput.value = '';
+    }
+  }
+
+  sendMessageOnEnter(event) {
+    if (event.key === 'Enter') {
+      this.onMessageSent();
+    }
   }
 
   subscribeSockets() {
@@ -41,14 +54,13 @@ class App extends Component {
       <div className="App">
         <div className="container">
           <div className="header">
-            <h2>Messages</h2>
-            <a href="#" title="Add Friend to this chat">+</a>
+            <h2>Mensagens</h2>
           </div>
           <div className="chat-box">
             {this.renderMessages()}
             <div className="enter-message">
-              <input type="text" ref={(input) => this.messageInput = input} placeholder="Enter your message.."/>
-              <a href="#" onClick={this.onMessageSent.bind(this)} className="send">Send</a>
+              <input type="text" onKeyUp={this.sendMessageOnEnter.bind(this)} ref={(input) => this.messageInput = input} placeholder="Digite sua mensagem.." />
+              <a href="#" onClick={this.onMessageSent.bind(this)} className="send">Enviar</a>
             </div>
           </div>
         </div>

@@ -65,7 +65,7 @@ a{
   background:#fff;
   display:inline-block;
   padding:13px;
-  width: calc(100% - 450px);
+  width: calc(100% - 6.2em);
   border-radius:2px;
   box-shadow: 0 1px 1px rgba(0,0,0,.04);
   position:relative;
