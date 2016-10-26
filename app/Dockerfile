@@ -6,14 +6,18 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Installing npm dependencies into the new project folder.
-COPY package.json /usr/src/app/
-RUN npm install
+# COPY package.json /usr/src/app/
 
 # Bundle app source
-COPY . /usr/src/app
+COPY package.json /usr/src/app/
+COPY ./server /usr/src/app/server
+COPY ./build /usr/src/app/build
+RUN ls
+
+RUN npm install --save express socket.io morgan
 
 EXPOSE 8080
 
 # runtime command: "npm start".
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "start-prod" ]
 
