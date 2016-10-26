@@ -12,8 +12,8 @@ io.sockets.on('connection', (socket) => {
   });
 });
 
-http.listen(process.env.PORT || 8080, () => {
-  console.log('Starting server on 8080');
+http.listen(process.env.PORT || 8081, () => {
+  console.log('Starting websocket server on 8081');
 });
 
 
