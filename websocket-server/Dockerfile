@@ -2,15 +2,14 @@
 FROM node:argon
 
 # Create app directory and use it as default.
-RUN mkdir -p /usr/src/websocket-server
-WORKDIR /usr/src/websocket-server
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
 # Installing npm dependencies into the new project folder.
-COPY package.json /usr/src/websocket-server/
-RUN npm install
+COPY package.json /usr/src/app/
+COPY server.js /usr/src/app/
 
-# Bundle app source
-COPY . /usr/src/websocket-server
+RUN npm install
 
 EXPOSE 8081
 

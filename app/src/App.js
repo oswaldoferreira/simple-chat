@@ -3,7 +3,9 @@ import logo from './logo.svg';
 import Message from './Message';
 import './App.css';
 let io = require('socket.io-client');
-let socket = io.connect(process.env.SOCKET_URI || 'http://0.0.0.0:8081');
+
+// TODO: Find a way to test locally without having to change it.
+let socket = io.connect('http://159.203.174.17:8002/');
 
 class App extends Component {
   constructor(props) {

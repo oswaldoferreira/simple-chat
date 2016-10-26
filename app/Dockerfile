@@ -5,9 +5,6 @@ FROM node:argon
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-# Installing npm dependencies into the new project folder.
-# COPY package.json /usr/src/app/
-
 # Bundle app source
 COPY package.json /usr/src/app/
 COPY ./server /usr/src/app/server
