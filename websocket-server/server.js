@@ -5,9 +5,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 io.sockets.on('connection', (socket) => {
-  var userName;
-
-  // Chat message
+  // Forwarding chat message
   socket.on('chat-message', (message) => {
     console.log(message);
     io.emit('chat-message', message);
@@ -15,7 +13,7 @@ io.sockets.on('connection', (socket) => {
 });
 
 http.listen(process.env.PORT || 8080, () => {
-  console.log('Starting server (:8080 if dev)');
+  console.log('Starting server on 8080');
 });
 
 
