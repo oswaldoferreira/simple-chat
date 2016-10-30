@@ -5,7 +5,7 @@ import './App.css';
 let io = require('socket.io-client');
 
 // TODO: Find a way to test locally without having to change it.
-let socket = io.connect('http://159.203.174.17:8002/');
+let socket = io.connect('http://chat.oswaldo.me:8002/');
 
 class App extends Component {
   constructor(props) {
