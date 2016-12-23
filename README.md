@@ -5,4 +5,4 @@ Playing around with Docker, Node.js, React and Socket.IO.
 
 Accessible on:
 
-http://chat.oswaldo.me:8001/
+http://chat.oswaldo.me/
